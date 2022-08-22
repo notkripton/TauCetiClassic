@@ -76,6 +76,16 @@
 //helper for inverting armor blocked values into a multiplier
 #define blocked_mult(blocked) max(1 - (blocked / 100), 0)
 
+//use this if you want to count your mob's 'consent' when another mob forces it to do something.
+/mob/proc/calculate_consent_multiplier()
+	if(incapacitated())
+		return 1
+	if(stat != CONSCIOUS)
+		return 1
+	if(a_intent == INTENT_HELP)
+		return 1.5
+	return 2
+
 /proc/do_mob(mob/user , mob/target, time = 30, check_target_zone = FALSE, uninterruptible = FALSE, progress = TRUE, datum/callback/extra_checks = null)
 	if(!user || !target)
 		return FALSE
